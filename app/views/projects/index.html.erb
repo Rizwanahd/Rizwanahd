@@ -1,0 +1,14 @@
+<h1> Projects</h1>
+
+our bugzilla has projects in que!
+
+<ul>
+  <% @projects.each do |project| %>
+    <% unless project.archived? %> 
+      <li>
+        <%=link_to project.name, project %>   
+      </li>
+    <% end %>
+  <% end %>
+</ul>
+<%= link_to "New Project", new_project_path %>
