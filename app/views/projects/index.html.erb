@@ -32,6 +32,7 @@ All users is here:
   <% User.all.each do |user| %>
     <li>
       <%= user.email %>
+      <%= user.role %>
       <%=
         link_to "Delete", 
         users_path(user), 
