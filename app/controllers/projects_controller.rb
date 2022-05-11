@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-# hello
+# its projectcontroller
 class ProjectsController < ApplicationController
+  before_action :authenticate_user!, except: [:index]
   def index
     @projects = Project.all
   end
@@ -30,7 +31,7 @@ class ProjectsController < ApplicationController
 
   def update
     @project = Project.find(params[:id])
-    if @project.update(project_params) 
+    if @project.update(project_params)
       redirect_to @project
     else
       render :edit, status: :unprocessable_entity

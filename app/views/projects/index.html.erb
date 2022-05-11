@@ -1,4 +1,15 @@
 <h1> Projects</h1>
+<ul>
+  <% if user_signed_in? %>
+    <li><%= " #{current_user.email}" %></li>
+    <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></li>
+  <% else %>
+    <li><%= link_to 'Sign In', new_user_session_path %></li>
+    <li><%= link_to 'Sign Up', new_user_registration_path %></li>
+  <% end %>
+</ul>
+
+
 
 our bugzilla has projects in que!
 
@@ -12,3 +23,21 @@ our bugzilla has projects in que!
   <% end %>
 </ul>
 <%= link_to "New Project", new_project_path %>
+<br>
+All users is here:
+
+
+<!-- users/index.html.erb -->
+<ul>
+  <% User.all.each do |user| %>
+    <li>
+      <%= user.email %>
+      <%=
+        link_to "Delete", 
+        users_path(user), 
+        method: :delete, 
+        data: { confirm: "Really delete this user?" } 
+      %>
+    </li>
+  <% end %>
+</ul>
