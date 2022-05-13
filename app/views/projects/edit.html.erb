@@ -1,0 +1,5 @@
+<h1>Edit Project</h1>
+<%= render "form", projects: @project %> 
+  <%= link_to "Home", projects_path %>
+  <%= link_to "destroy", project_path(@project), data:{turbo_method: :delete} %>
+</li>

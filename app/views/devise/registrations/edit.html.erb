@@ -15,7 +15,7 @@
   
   <div class="field">
     <%= f.label :"User type" %><br />
-    <%= f.select :role, ["project manager", "QA", "Developer", "Super Admin"] %>
+    <%= f.select :role, ["project manager", "QA", "Developer"] %>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>

@@ -1,9 +1,14 @@
 <h1>Show Page</h1>
 <br>
 <h1><%= @project.name %></h1>
-<p><%= @project.description %></p>
+<h4><%= @project.description %></h4>
+<h5>Its user name </h5>
+<p><%= " #{current_user.username}" %></p>
+<h5>Its user role </h5>
+<p><%= " #{current_user.role}" %></p>
 <br><br>
 <li>
+  <%= link_to "Edit", edit_project_path %>
   <%= link_to "Home", projects_path %>
-  <%= link_to "destroy", project_path(@project), data:{turbo_method: :delete} %>
+  <%= link_to "Destroy", project_path(@project), data:{turbo_method: :delete} %>
 </li>

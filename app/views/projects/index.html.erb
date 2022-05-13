@@ -22,7 +22,9 @@ our bugzilla has projects in que!
     <% end %>
   <% end %>
 </ul>
+<% if policy(Project).new? %>
 <%= link_to "New Project", new_project_path %>
+<% end %>
 <br>
 All users is here:
 

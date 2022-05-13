@@ -2,9 +2,9 @@
 
 # its project modelclass
 class Project < ApplicationRecord
-  belongs_to :bugs
-  belongs_to :features
-  belongs_to :comments
+  has_many :user_projects,  dependent: :destroy
+  has_many :users, through: :user_projects
+
   def archived?
     name == 'archived'
   end

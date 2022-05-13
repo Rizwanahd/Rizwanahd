@@ -2,7 +2,8 @@
 
 # its projectcontroller
 class ProjectsController < ApplicationController
-  before_action :authenticate_user!, except: [:index]
+  before_action :authenticate_user!
+
   def index
     @projects = Project.all
   end
@@ -13,6 +14,7 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
+    authorize Project
   end
 
   def create
