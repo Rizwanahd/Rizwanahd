@@ -12,3 +12,63 @@
   <%= link_to "Home", projects_path %>
   <%= link_to "Destroy", project_path(@project), data:{turbo_method: :delete} %>
 </li>
+
+
+Project Developers
+<ul>
+  <% @project.users.developer.each do |user| %>
+    <li>
+      <%= user.email %>
+      <%= user.role %>
+      <% if policy(Project).new? %>
+      <%=button_to "Remove to Project", 
+        destroy_user_project_path(@project, user_id: user.id),:method => :delete   
+      %>
+      <%end%>
+    </li>
+  <% end %>
+</ul>
+
+Developers to add
+<ul>
+  <% User.developer.each do |user| %>
+    <% unless @project.users.include? user %>
+      <li>
+        <%= user.email %>
+        <%= user.role %>
+        <% if policy(Project).new? %>
+        <%=link_to "ADD to Project", add_user_project_path(@project, user_id: user.id) %>
+        <%end%>
+      </li>
+    <% end %>
+  <% end %>
+</ul>
+Project QA
+<ul>
+  <% @project.users.qa.each do |user| %>
+    <li>
+      <%= user.email %>
+      <%= user.role %>
+      <% if policy(Project).new? %>
+      <%=button_to "Remove to Project", 
+        destroy_user_project_path(@project, user_id: user.id),:method => :delete   
+      %>
+      <%end%>
+    </li>
+  <% end %>
+</ul>
+
+QA to add
+<ul>
+  <% User.qa.each do |user| %>
+    <% unless @project.users.include? user %>
+      <li>
+        <%= user.email %>
+        <%= user.role %>
+        <% if policy(Project).new? %>
+        <%=link_to "ADD to Project", add_user_project_path(@project, user_id: user.id) %>
+        <%end%>
+      </li>
+    <% end %>
+  <% end %>
+</ul>

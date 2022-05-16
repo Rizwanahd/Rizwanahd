@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root 'projects#index'
   resources :projects do
+    member do
+      get :add_user
+      delete :destroy_user
+    end
   end
   get 'users', to: 'users#index'
   get 'users/:id', to: 'users#show', as: 'user'

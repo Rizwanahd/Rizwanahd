@@ -33,14 +33,19 @@ All users is here:
 <ul>
   <% User.all.each do |user| %>
     <li>
-      <%= user.email %>
+      Email:
+      <%= user.email %><br>
+      Role: 
       <%= user.role %>
-      <%=
-        link_to "Delete", 
-        users_path(user), 
-        method: :delete, 
-        data: { confirm: "Really delete this user?" } 
-      %>
     </li>
+  <% end %>
+</ul>
+<ul>
+  <% @projects.each do |project| %>
+    <% unless project.archived? %> 
+      <li>
+        <%=link_to project.name, project %>   
+      </li>
+    <% end %>
   <% end %>
 </ul>
