@@ -40,12 +40,3 @@ All users is here:
     </li>
   <% end %>
 </ul>
-<ul>
-  <% @projects.each do |project| %>
-    <% unless project.archived? %> 
-      <li>
-        <%=link_to project.name, project %>   
-      </li>
-    <% end %>
-  <% end %>
-</ul>

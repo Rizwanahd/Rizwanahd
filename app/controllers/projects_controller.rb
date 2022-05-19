@@ -3,24 +3,22 @@
 # its projectcontroller
 class ProjectsController < ApplicationController
   before_action :authenticate_user!, only: [:show]
+  before_action :find_and_authorize_project, only: %i[show edit update destroy destroy_user add_user]
 
   def index
     @projects = Project.all
   end
 
-  def show
-    puts "~~~"*100
-    @project = Project.find(params[:id])
-    puts(@project.user_projects)
-  end
+  def show; end
 
   def new
     @project = Project.new
-    authorize Project
+    authorize(@project)
   end
 
   def create
     @project = Project.new(project_params)
+    authorize(@project)
 
     if @project.save
       redirect_to @project
@@ -29,12 +27,9 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def edit
-    @project = Project.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @project = Project.find(params[:id])
     if @project.update(project_params)
       redirect_to @project
     else
@@ -43,25 +38,22 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    @project = Project.find(params[:id])
     @project.destroy!
     redirect_to projects_path, status: :see_other
   end
 
   def find_project_by_user
     @project = current_user.projects.find(params[:id])
+    authorize(@project)
   end
 
   def destroy_user
-    @project = Project.find(params[:id])
     @user_project = @project.user_projects.find_by(user_id: params[:user_id])
     @user_project.destroy!
     redirect_to Project.find(params[:id])
   end
 
   def add_user
-    puts "~~~"*100
-    puts params
     user_project = UserProject.new(project_id: params[:id], user_id: params[:user_id])
     user_project.save
     redirect_to Project.find(params[:id])
@@ -71,5 +63,10 @@ class ProjectsController < ApplicationController
 
   def project_params
     params.require(:project).permit(:name, :description)
+  end
+
+  def find_and_authorize_project
+    @project = Project.find(params[:id])
+    authorize(@project)
   end
 end
