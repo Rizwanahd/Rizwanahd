@@ -50,11 +50,13 @@ class ProjectsController < ApplicationController
   def destroy_user
     @user_project = @project.user_projects.find_by(user_id: params[:user_id])
     @user_project.destroy!
+    redirect_to Project.find(params[:id])
   end
 
   def add_user
     user_project = UserProject.new(project_id: params[:id], user_id: params[:user_id])
     user_project.save
+    redirect_to Project.find(params[:id])
   end
 
   private

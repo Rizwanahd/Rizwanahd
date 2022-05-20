@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   root 'projects#index'
   resources :projects do
     member do
-      post :add_user
+      get :add_user
       delete :destroy_user
     end
   end
