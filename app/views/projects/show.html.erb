@@ -20,7 +20,7 @@
       class: 'btn-primary' %>
   </div>
   <div class=' mx-6'>
-    <p>Project Developers</p>
+    <p class='text-green-400'>Project Developers</p>
     <ul>
       <% @project.users.developer.each do |user| %>
         <li>
@@ -32,20 +32,20 @@
         </li>
       <% end %>
     </ul>
-    <p class='text-green-400'>Developers to add</p>
-    <ul>
-      <% User.developer.each do |user| %>
-        <% unless @project.users.include? user %>
-          <li>
-            <%= user.username %>
-            <% if policy(Project).new? %>
+    <% if policy(Project).new? %>
+      <p class='text-green-400'>Developers to add</p>
+      <ul>
+        <% User.developer.each do |user| %>
+          <% unless @project.users.include? user %>
+            <li>
+              <%= user.username %>
               <%=link_to "ADD to Project", add_user_project_path(@project, user_id: user.id),
                 class: 'btn-primary' %>
-            <%end%>
-          </li>
+            </li>
+          <% end %>
         <% end %>
-      <% end %>
-    </ul>
+      </ul>
+    <%end%>
     <br>
     <br>
     <br>
@@ -62,19 +62,19 @@
         </li>
       <% end %>
     </ul>
-    <p>QA to add</p>
-    <ul>
-      <% User.qa.each do |user| %>
-        <% unless @project.users.include? user %>
-          <li>
-            <%= user.username %>
-            <% if policy(Project).new? %>
+    <% if policy(Project).new? %>
+      <p class='text-green-400'>QA to add</p>
+      <ul>
+        <% User.qa.each do |user| %>
+          <% unless @project.users.include? user %>
+            <li>
+              <%= user.username %>
               <%=link_to "ADD to Project", add_user_project_path(@project, user_id: user.id), 
             class: 'btn-primary' %>
-            <%end%>
-          </li>
+            </li>
+          <% end %>
         <% end %>
-      <% end %>
-    </ul>
+      </ul>
+    <%end%>
   </div>
 </div>
