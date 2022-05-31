@@ -2,7 +2,7 @@
 
 # its projectcontroller
 class ProjectsController < ApplicationController
-  before_action :authenticate_user!, only: [:show]
+  before_action :authenticate_user!
   before_action :find_and_authorize_project, only: %i[show edit update destroy destroy_user add_user]
 
   def index
@@ -18,8 +18,8 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(project_params)
+    @project.creator = current_user
     authorize(@project)
-
     if @project.save
       redirect_to @project
     else
@@ -38,6 +38,7 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
+    puts "~~~"*1000
     @project.destroy!
     redirect_to projects_path, status: :see_other
   end
@@ -67,6 +68,7 @@ class ProjectsController < ApplicationController
 
   def find_and_authorize_project
     @project = Project.find(params[:id])
+    puts "111"*1000
     authorize(@project)
   end
 end

@@ -1,42 +1,21 @@
-<h1> Projects</h1>
-<ul>
-  <% if user_signed_in? %>
-    <li><%= " #{current_user.email}" %></li>
-    <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></li>
-  <% else %>
-    <li><%= link_to 'Sign In', new_user_session_path %></li>
-    <li><%= link_to 'Sign Up', new_user_registration_path %></li>
-  <% end %>
-</ul>
+<div class='w-40 h-screen bg-blue-500'>
+<h1 class='text-xl text-center'> Projects</h1>
 
-
-
-our bugzilla has projects in que!
 
 <ul>
   <% @projects.each do |project| %>
     <% unless project.archived? %> 
-      <li>
-        <%=link_to project.name, project %>   
+      <li class="m-1 flex justify-center item-center bg-blue-400 hover:bg-blue-700 text-white font-bold ">
+
+        <%= link_to project.name, project, class: 'w-full py-2 px-4 text-center' %>   
       </li>
     <% end %>
   <% end %>
 </ul>
-<% if policy(Project).new? %>
-<%= link_to "New Project", new_project_path %>
-<% end %>
-<br>
-All users is here:
 
-
-<!-- users/index.html.erb -->
-<ul>
-  <% User.all.each do |user| %>
-    <li>
-      Email:
-      <%= user.email %><br>
-      Role: 
-      <%= user.role %>
-    </li>
+<div class='w-full flex justify-center'><button class="btn-primary">
+  <% if policy(Project).new? %>
+  <%= link_to "New Project", new_project_path %>
   <% end %>
-</ul>
+</button></div>
+</div>

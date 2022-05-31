@@ -1,74 +1,78 @@
-<h1>Show Page</h1>
-<br>
-<h1><%= @project.name %></h1>
-<h4><%= @project.description %></h4>
-<h5>Its user name </h5>
-<p><%= " #{current_user.username}" %></p>
-<h5>Its user role </h5>
-<p><%= " #{current_user.role}" %></p>
-<br><br>
-<li>
-  <%= link_to "Edit", edit_project_path %>
-  <%= link_to "Home", projects_path %>
-  <%= link_to "Destroy", project_path(@project), data:{turbo_method: :delete} %>
-</li>
-
-
-Project Developers
-<ul>
-  <% @project.users.developer.each do |user| %>
-    <li>
-      <%= user.email %>
-      <%= user.role %>
-      <% if policy(Project).new? %>
-      <%=button_to "Remove to Project", 
-        destroy_user_project_path(@project, user_id: user.id),:method => :delete   
-      %>
-      <%end%>
-    </li>
-  <% end %>
-</ul>
-
-Developers to add
-<ul>
-  <% User.developer.each do |user| %>
-    <% unless @project.users.include? user %>
-      <li>
-        <%= user.email %>
-        <%= user.role %>
-        <% if policy(Project).new? %>
-        <%=link_to "ADD to Project", add_user_project_path(@project, user_id: user.id) %>
-        <%end%>
-      </li>
-    <% end %>
-  <% end %>
-</ul>
-Project QA
-<ul>
-  <% @project.users.qa.each do |user| %>
-    <li>
-      <%= user.email %>
-      <%= user.role %>
-      <% if policy(Project).new? %>
-      <%=button_to "Remove to Project", 
-        destroy_user_project_path(@project, user_id: user.id),:method => :delete   
-      %>
-      <%end%>
-    </li>
-  <% end %>
-</ul>
-
-QA to add
-<ul>
-  <% User.qa.each do |user| %>
-    <% unless @project.users.include? user %>
-      <li>
-        <%= user.email %>
-        <%= user.role %>
-        <% if policy(Project).new? %>
-        <%=link_to "ADD to Project", add_user_project_path(@project, user_id: user.id) %>
-        <%end%>
-      </li>
-    <% end %>
-  <% end %>
-</ul>
+<div class='flex relative flex-grow'>
+  <div class='basis-1/4 space-x-6 bg-blue-500'>
+    <p class='mx-6'>Project Name:</p>
+    <h1><%= @project.name %></h1>
+    <br>
+    <p>Project description:</p>
+    <h4><%= @project.description %></h4>
+    <br>
+    <h5>Its user name </h5>
+    <p><%= " #{current_user.username}" %></p>
+    <h5>Its user role </h5>
+    <p><%= " #{current_user.role}" %></p>
+    <%= link_to "Edit", edit_project_path,
+      class: 'btn-primary' %>
+    <%= link_to "Home", projects_path, 
+      class: 'btn-primary' %>
+    <%= link_to "Destroy", project_path(@project), data:{turbo_method: :delete}, 
+      class: 'btn-primary' %>
+  </div>
+  <div class=' mx-6'>
+    <p>Project Developers</p>
+    <ul>
+      <% @project.users.developer.each do |user| %>
+        <li>
+          <%= user.username %>
+          <% if policy(Project).new? %>
+            <%=button_to "Remove to Project", 
+        destroy_user_project_path(@project, user_id: user.id),:method => :delete,
+          class: 'btn-primary' %>        <%end%>
+        </li>
+      <% end %>
+    </ul>
+    <p class='text-green-400'>Developers to add</p>
+    <ul>
+      <% User.developer.each do |user| %>
+        <% unless @project.users.include? user %>
+          <li>
+            <%= user.username %>
+            <% if policy(Project).new? %>
+              <%=link_to "ADD to Project", add_user_project_path(@project, user_id: user.id),
+                class: 'btn-primary' %>
+            <%end%>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+    <br>
+    <br>
+    <br>
+    <p class='text-green-400 '>Project QA</p>
+    <ul>
+      <% @project.users.qa.each do |user| %>
+        <li>
+          <%= user.username%>
+          <% if policy(Project).new? %>
+            <%=button_to "Remove to Project", 
+          destroy_user_project_path(@project, user_id: user.id),:method => :delete,
+            class: 'btn-primary' %>
+          <%end%>
+        </li>
+      <% end %>
+    </ul>
+    <p>QA to add</p>
+    <ul>
+      <% User.qa.each do |user| %>
+        <% unless @project.users.include? user %>
+          <li>
+            <%= user.username %>
+            <% if policy(Project).new? %>
+              <%=link_to "ADD to Project", add_user_project_path(@project, user_id: user.id), 
+            class: 'btn-primary' %>
+            <%end%>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>

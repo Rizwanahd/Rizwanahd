@@ -14,26 +14,30 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def edit?
+    new? && user == record.creator
+  end
+  
+  def create?
     new?
   end
 
   def update?
-    new?
+    edit?
   end
 
-  def delete?
-    new?
+  def destroy?
+    edit?
   end
 
   def show?
-    new? || user.projects.include?(record)
+    edit? || user.projects.include?(record)
   end
 
   def add_user?
-    new?
+    edit?
   end
 
   def destroy_user?
-    new?
+    edit?
   end
 end

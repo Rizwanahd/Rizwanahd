@@ -1,17 +1,29 @@
 <!DOCTYPE html>
-
 <html>
   <head>
     <title>Bugzilla</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
   <body>
-    <%= yield %>
+    <main>
+      <div class="min-h-screen flex flex-col">
+        <% if signed_in? %>
+          <div class='h-10 px-5 flex justify-between items-center bg-gray-400'>
+            <h1>Bugzilla</h1>
+            <%= " #{current_user.username}" %>
+            <p><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></p>
+          </div>
+        <% end %>
+        <%= yield %>
+        <div class='flex justify-center items-center static bottom-0 right-0 left-0 h-10 bg-gray-300'>
+          <p>Designed by Jazzari</p>
+        </div>
+      </div>
+    </main>
   </body>
 </html>

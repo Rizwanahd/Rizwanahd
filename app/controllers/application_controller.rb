@@ -3,7 +3,7 @@
 # its applicationcontroller.rb
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
-  include Pundit
+  include Pundit::Authorization
   protect_from_forgery with: :exception
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
