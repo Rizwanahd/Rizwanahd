@@ -1,21 +1,17 @@
 <div class='w-40 h-screen bg-blue-500'>
-<h1 class='text-xl text-center'> Projects</h1>
-
-
-<ul>
-  <% @projects.each do |project| %>
-    <% unless project.archived? %> 
-      <li class="m-1 flex justify-center item-center bg-blue-400 hover:bg-blue-700 text-white font-bold ">
-
-        <%= link_to project.name, project, class: 'w-full py-2 px-4 text-center' %>   
-      </li>
+  <h1 class='text-xl text-center'> Projects</h1>
+  <ul>
+    <% @projects.each do |project| %>
+      <% unless project.archived? %>
+        <li class="m-1 flex justify-center item-center bg-blue-400 hover:bg-blue-700 text-white font-bold ">
+          <%= link_to project.name, project, class: 'w-full py-2 px-4 text-center' %>
+        </li>
+      <% end %>
     <% end %>
-  <% end %>
-</ul>
-
-<div class='w-full flex justify-center'><button class="btn-primary">
+  </ul>
   <% if policy(Project).new? %>
-  <%= link_to "New Project", new_project_path %>
+    <div class='w-full flex justify-center'><button class="btn-primary">
+        <%= link_to "New Project", new_project_path %></button>
+    </div>
   <% end %>
-</button></div>
 </div>

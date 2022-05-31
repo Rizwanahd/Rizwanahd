@@ -10,11 +10,13 @@
     <p><%= " #{current_user.username}" %></p>
     <h5>Its user role </h5>
     <p><%= " #{current_user.role}" %></p>
-    <%= link_to "Edit", edit_project_path,
+    <% if policy(Project).new? %>
+      <%= link_to "Edit", edit_project_path,
       class: 'btn-primary' %>
+      <%= link_to "Destroy", project_path(@project), data:{turbo_method: :delete}, 
+      class: 'btn-primary' %>
+    <% end %>
     <%= link_to "Home", projects_path, 
-      class: 'btn-primary' %>
-    <%= link_to "Destroy", project_path(@project), data:{turbo_method: :delete}, 
       class: 'btn-primary' %>
   </div>
   <div class=' mx-6'>

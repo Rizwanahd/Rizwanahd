@@ -11,7 +11,7 @@
   </head>
   <body>
     <main>
-      <div class="min-h-screen flex flex-col">
+      <div class="min-h-[calc(100vh-40px)] flex flex-col">
         <% if signed_in? %>
           <div class='h-10 px-5 flex justify-between items-center bg-gray-400'>
             <h1>Bugzilla</h1>
@@ -20,10 +20,10 @@
           </div>
         <% end %>
         <%= yield %>
-        <div class='flex justify-center items-center static bottom-0 right-0 left-0 h-10 bg-gray-300'>
-          <p>Designed by Jazzari</p>
-        </div>
       </div>
     </main>
   </body>
+  <div class='flex justify-center items-center bottom-0 right-0 left-0 h-10 bg-gray-300'>
+    <p>Designed by Jazzari</p>
+  </div>
 </html>

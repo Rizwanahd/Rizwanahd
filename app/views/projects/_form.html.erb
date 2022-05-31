@@ -1,8 +1,10 @@
-
-<%= form_with model: @project do |form| %>
-  <%=form.label :"Name:" %><br>
-  <%= form.text_field :name %><br>
-  <%=form.label :"Description:"%><br>
-  <%= form.text_area :description %>
-  <%= form.submit class: 'btn-primary' %>
-<% end %>
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div class="px-8 py-6 mt-4 text-left bg-white shadow-lg">
+    <div class="bg-white rounded px-8 pt-6 pb-8 mb-4">
+      <%= form_with model: @project do |form| %>
+        <%=form.label :"Name:" %><br>
+        <%= form.text_field :name %><br>
+        <%=form.label :"Description:"%><br>
+        <%= form.text_area :description %>
+        <%= form.submit class: 'btn-primary' %>
+      <% end %>

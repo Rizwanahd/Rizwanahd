@@ -6,7 +6,8 @@ class ProjectsController < ApplicationController
   before_action :find_and_authorize_project, only: %i[show edit update destroy destroy_user add_user]
 
   def index
-    @projects = Project.all
+    # @projects = Project.all
+    @projects = policy_scope(Project)
   end
 
   def show; end
@@ -38,7 +39,6 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    puts "~~~"*1000
     @project.destroy!
     redirect_to projects_path, status: :see_other
   end
@@ -68,7 +68,6 @@ class ProjectsController < ApplicationController
 
   def find_and_authorize_project
     @project = Project.find(params[:id])
-    puts "111"*1000
     authorize(@project)
   end
 end

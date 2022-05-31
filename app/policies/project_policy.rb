@@ -4,9 +4,13 @@
 class ProjectPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
-    # def resolve
-    # scope.all
-    # end
+    def resolve
+      if user.project_manager?
+        scope.where(creator: user)
+      else
+        scope.where(id: user.user_projects.pluck(:project_id))
+      end
+    end
   end
 
   def new?
@@ -16,7 +20,7 @@ class ProjectPolicy < ApplicationPolicy
   def edit?
     new? && user == record.creator
   end
-  
+
   def create?
     new?
   end
