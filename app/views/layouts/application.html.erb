@@ -20,11 +20,18 @@
               <%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></p>
           </div>
         <% end %>
+        <div class="flash-container">
+          <% flash.each do |type, msg| %>
+            <div class="<%= ['flash-success', 'flash-notice', 'flash-alert'].find { |t| t.include? type } %> flash">
+              <span class="block sm:inline"><%= msg %></span>
+            </div>
+          <% end %>
+        </div>
         <%= yield %>
       </div>
     </main>
   </body>
   <div class='flex justify-center items-center bottom-0 right-0 left-0 h-10 bg-gray-300'>
-    <p>Designed by Jazzari</p>
+    <p>Powered by Jazzari</p>
   </div>
 </html>

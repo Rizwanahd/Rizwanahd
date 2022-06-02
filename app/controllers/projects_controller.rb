@@ -10,11 +10,14 @@ class ProjectsController < ApplicationController
     @projects = policy_scope(Project)
   end
 
-  def show; end
+  def show
+    flash.now[:success] = 'Project details here'
+  end
 
   def new
     @project = Project.new
     authorize(@project)
+    flash.now[:success] = 'New Project'
   end
 
   def create
@@ -28,7 +31,9 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    flash.now[:success] = 'Project edit here'
+  end
 
   def update
     if @project.update(project_params)

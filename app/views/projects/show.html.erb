@@ -6,10 +6,12 @@
     <p>Project description:</p>
     <h4><%= @project.description %></h4>
     <br>
-    <h5>Its user name </h5>
+    <h5>User name: </h5>
     <p><%= " #{current_user.username}" %></p>
-    <h5>Its user role </h5>
+    <br>
+    <h5>Role: </h5>
     <p><%= " #{current_user.role}" %></p>
+    <br>
     <% if policy(Project).new? %>
       <%= link_to "Edit", edit_project_path,
       class: 'btn-primary' %>
@@ -20,7 +22,7 @@
       class: 'btn-primary' %>
   </div>
   <div class=' mx-6'>
-    <p class='text-green-400'>Project Developers</p>
+    <p class='text-green-400'>Project Developers:</p>
     <ul>
       <% @project.users.developer.each do |user| %>
         <li>
@@ -33,7 +35,8 @@
       <% end %>
     </ul>
     <% if policy(Project).new? %>
-      <p class='text-green-400'>Developers to add</p>
+      <br>
+      <p class='text-green-400'>Developers to add:</p>
       <ul>
         <% User.developer.each do |user| %>
           <% unless @project.users.include? user %>
@@ -48,8 +51,7 @@
     <%end%>
     <br>
     <br>
-    <br>
-    <p class='text-green-400 '>Project QA</p>
+    <p class='text-green-400 '>Project QA:</p>
     <ul>
       <% @project.users.qa.each do |user| %>
         <li>
@@ -63,7 +65,8 @@
       <% end %>
     </ul>
     <% if policy(Project).new? %>
-      <p class='text-green-400'>QA to add</p>
+      <br>
+      <p class='text-green-400'>QA to add:</p>
       <ul>
         <% User.qa.each do |user| %>
           <% unless @project.users.include? user %>

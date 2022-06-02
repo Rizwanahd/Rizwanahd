@@ -2,10 +2,14 @@
 
 # its applicationcontroller.rb
 class ApplicationController < ActionController::Base
-  before_action :configure_permitted_parameters, if: :devise_controller?
   include Pundit::Authorization
+
+  add_flash_types :success
+
   protect_from_forgery with: :exception
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   private
 
