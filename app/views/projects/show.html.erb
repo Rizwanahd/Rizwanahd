@@ -1,5 +1,5 @@
 <div class='flex relative flex-grow'>
-  <div class='basis-1/4 space-x-6 bg-blue-500'>
+  <div class='w-60 space-x-6 bg-blue-500'>
     <p class='mx-6'>Project Name:</p>
     <h1><%= @project.name %></h1>
     <br>
@@ -30,7 +30,7 @@
           <% if policy(Project).new? %>
             <%=button_to "Remove to Project", 
         destroy_user_project_path(@project, user_id: user.id),:method => :delete,
-          class: 'btn-primary' %>        <%end%>
+          class: 'btn-primary w-[12rem]' %>        <%end%>
         </li>
       <% end %>
     </ul>
@@ -59,7 +59,7 @@
           <% if policy(Project).new? %>
             <%=button_to "Remove to Project", 
           destroy_user_project_path(@project, user_id: user.id),:method => :delete,
-            class: 'btn-primary' %>
+            class: 'btn-primary w-[12rem]' %>
           <%end%>
         </li>
       <% end %>
