@@ -1,0 +1,16 @@
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div class="px-8 py-6 mt-4 text-left bg-white shadow-lg">
+    <div class="bg-white rounded px-8 pt-6 pb-8 mb-4">
+      <%= form_with(model: @issue, url:[@project, @issue] )do |form| %>
+        <%=form.label :"Name:" %><br>
+        <%= form.text_field :name %><br>
+        <div class="field">
+          <%= form.label :"Type:" %><br>
+          <%= form.select :issue_type, ["feature", "bug"] %>
+        </div>
+        <div class="field">
+          <%= form.label :"Status:" %><br />
+          <%= form.select :status, ["created", "in_progress", "in_review", "fixed"] %>
+        </div>
+        <%= form.submit class: 'btn-primary' %>
+      <% end %>

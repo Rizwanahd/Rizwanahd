@@ -80,4 +80,22 @@
       </ul>
     <%end%>
   </div>
+  <div class=' mx-6'>
+    <p class='text-green-400'>Project Issues:</p>
+    <ul>
+      <% Issue.all.each do |issue| %>
+        <li>
+          <p>Issue Name:</p>
+          <%= issue.name %><br>
+          <%= link_to "Edit", edit_project_issue_path(@project, issue),
+      class: 'btn-primary' %>
+          <%= link_to "Destroy", project_issue_path(@project, issue), data:{turbo_method: :delete}, 
+      class: 'btn-primary' %>
+        </li>
+      <% end %>
+    </ul>
+    <div class='w-full flex justify-center'><button class="btn-primary">
+        <%= link_to "Create Issue", new_project_issue_path(@project) %></button>
+    </div>
+  </div>
 </div>
