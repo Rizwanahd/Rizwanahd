@@ -4,6 +4,7 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_and_authorize_project, only: %i[show edit update destroy destroy_user add_user]
+  before_action :load_qa_and_developers_users, only: [:show]
 
   def index
     # @projects = Project.all
@@ -11,7 +12,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    flash.now[:success] = 'Project details here'
+    @project = Project.includes(:users, issues: %i[qa developer]).find(params[:id])
   end
 
   def new
@@ -74,5 +75,9 @@ class ProjectsController < ApplicationController
   def find_and_authorize_project
     @project = Project.find(params[:id])
     authorize(@project)
+  end
+
+  def load_qa_and_developers_users
+    @users = User.where(role: %i[qa developer])
   end
 end

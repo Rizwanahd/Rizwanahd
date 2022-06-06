@@ -18,7 +18,7 @@ class IssuesController < ApplicationController
   def new
     @issue = Issue.new
     @issue.project = @project
-    # authorize(@issue)
+    authorize(@issue)
     flash.now[:success] = 'New issue'
   end
 
@@ -26,7 +26,7 @@ class IssuesController < ApplicationController
     @issue = Issue.new(issue_params)
     @issue.project = @project
     @issue.creator = current_user
-    # authorize(@issue)
+    authorize(@issue)
     if @issue.save
       redirect_to @project
     else
@@ -48,12 +48,12 @@ class IssuesController < ApplicationController
 
   def destroy
     @issue.destroy!
-    redirect_to project_path, status: :see_other
+    redirect_to @project, status: :see_other
   end
 
   def find_issue_by_user
     @issue = current_user.issues.find(params[:id])
-    # authorize(@issue)
+    authorize(@issue)
   end
 
   private
@@ -67,11 +67,11 @@ class IssuesController < ApplicationController
   end
 
   def issue_params
-    params.require(:issue).permit(:name, :issue_type, :status)
+    params.require(:issue).permit(:name, :issue_type, :status, :qa_id, :developer_id)
   end
 
   def find_and_authorize_issue
     @issue = Issue.find(params[:id])
-    # authorize(@issue)
+    authorize(@issue)
   end
 end

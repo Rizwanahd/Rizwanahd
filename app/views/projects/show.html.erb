@@ -24,7 +24,7 @@
   <div class=' mx-6'>
     <p class='text-green-400'>Project Developers:</p>
     <ul>
-      <% @project.users.developer.each do |user| %>
+      <% @project.users.select(&:developer?).each do |user| %>
         <li>
           <%= user.username %>
           <% if policy(Project).new? %>
@@ -38,7 +38,7 @@
       <br>
       <p class='text-green-400'>Developers to add:</p>
       <ul>
-        <% User.developer.each do |user| %>
+        <% @users.select(&:developer?).each do |user| %>
           <% unless @project.users.include? user %>
             <li>
               <%= user.username %>
@@ -53,7 +53,7 @@
     <br>
     <p class='text-green-400 '>Project QA:</p>
     <ul>
-      <% @project.users.qa.each do |user| %>
+      <% @project.users.select(&:qa?).each do |user| %>
         <li>
           <%= user.username%>
           <% if policy(Project).new? %>
@@ -68,7 +68,7 @@
       <br>
       <p class='text-green-400'>QA to add:</p>
       <ul>
-        <% User.qa.each do |user| %>
+        <% @users.select(&:qa?).each do |user| %>
           <% unless @project.users.include? user %>
             <li>
               <%= user.username %>
@@ -80,22 +80,42 @@
       </ul>
     <%end%>
   </div>
-  <div class=' mx-6'>
-    <p class='text-green-400'>Project Issues:</p>
+  <div class='mx-40 '>
+    <p class='text-green-400'>Project Bugs:</p>
     <ul>
-      <% Issue.all.each do |issue| %>
-        <li>
-          <p>Issue Name:</p>
-          <%= issue.name %><br>
-          <%= link_to "Edit", edit_project_issue_path(@project, issue),
-      class: 'btn-primary' %>
-          <%= link_to "Destroy", project_issue_path(@project, issue), data:{turbo_method: :delete}, 
-      class: 'btn-primary' %>
+      <% @project.issues.select(&:bug?).each do |issue| %>
+        <li class="btn-primary bg-green-300 hover:bg-green-400 ">
+          <%= link_to issue.name, edit_project_issue_path(@project, issue), class: 'w-full py-2 px-4 text-center' %>
         </li>
+        <p>Status : <%= issue.status %></p>
+        <p>QA : <%= issue.qa&.username %></p>
+        <p>Developer : <%= issue.developer&.username %></p>
       <% end %>
     </ul>
-    <div class='w-full flex justify-center'><button class="btn-primary">
-        <%= link_to "Create Issue", new_project_issue_path(@project) %></button>
-    </div>
+    <br>
+    <% if policy(Issue).new? %>
+      <div class='w-full flex justify-center'><button class="btn-primary">
+          <%= link_to "Create Issue", new_project_issue_path(@project) %></button>
+      </div>
+    <% end %>
+  </div>
+  <div class='mx-10 '>
+    <p class='text-green-400'>Project Features:</p>
+    <ul>
+      <% @project.issues.select(&:feature?).each do |issue| %>
+        <li class="btn-primary bg-green-300 hover:bg-green-400 ">
+          <%= link_to issue.name, edit_project_issue_path(@project, issue), class: 'w-full py-2 px-4 text-center' %>
+        </li>
+        <p>Status : <%= issue.status %></p>
+        <p>QA : <%= issue.qa&.username %></p>
+        <p>Developer : <%= issue.developer&.username %></p>
+      <% end %>
+    </ul>
+    <br>
+    <% if policy(Issue).new? %>
+      <div class='w-full flex justify-center'><button class="btn-primary">
+          <%= link_to "Create Issue", new_project_issue_path(@project) %></button>
+      </div>
+    <% end %>
   </div>
 </div>

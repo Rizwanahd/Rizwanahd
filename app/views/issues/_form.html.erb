@@ -12,5 +12,13 @@
           <%= form.label :"Status:" %><br />
           <%= form.select :status, ["created", "in_progress", "in_review", "fixed"] %>
         </div>
+        <div class="field">
+          <%= form.label :"QA:" %><br>
+          <%= form.select :qa_id, [['Select QA', nil]] + @project.users.qa.map{ |u| [ u.username, u.id] } %>
+        </div>
+        <div class="field">
+          <%= form.label :"Developer:" %><br>
+          <%= form.select :developer_id, [['Select Developer', nil]] + @project.users.developer.map{ |u| [ u.username, u.id] } %>
+        </div>
         <%= form.submit class: 'btn-primary' %>
       <% end %>
