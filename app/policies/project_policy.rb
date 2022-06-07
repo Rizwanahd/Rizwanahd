@@ -19,7 +19,7 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def edit?
-    new? && user == record.creator
+    user == record.creator
   end
 
   def create?
@@ -35,7 +35,7 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def show?
-    edit? || user.projects.include?(record)
+    new? || user.projects.include?(record)
   end
 
   def add_user?

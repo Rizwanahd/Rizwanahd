@@ -14,7 +14,7 @@ class IssuePolicy < ApplicationPolicy
   end
 
   def edit?
-    new? && user == record.creator
+    new? || user == record.qa || user == record.developer
   end
 
   def create?
@@ -31,5 +31,9 @@ class IssuePolicy < ApplicationPolicy
 
   def show?
     edit?
+  end
+
+  def qa_show?
+    new? || user == record.qa
   end
 end

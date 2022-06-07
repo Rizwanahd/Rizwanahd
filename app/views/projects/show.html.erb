@@ -12,11 +12,14 @@
     <h5>Role: </h5>
     <p><%= " #{current_user.role}" %></p>
     <br>
-    <% if policy(Project).new? %>
+    <% if policy(@project).edit? %>
       <%= link_to "Edit", edit_project_path,
       class: 'btn-primary' %>
       <%= link_to "Destroy", project_path(@project), data:{turbo_method: :delete}, 
       class: 'btn-primary' %>
+    <% end %>
+    <% if policy(Issue).new? %>
+      <%= link_to "Create Issue", new_project_issue_path(@project), class:'btn-primary' %>
     <% end %>
     <%= link_to "Home", projects_path, 
       class: 'btn-primary' %>
@@ -82,40 +85,32 @@
   </div>
   <div class='mx-40 '>
     <p class='text-green-400'>Project Bugs:</p>
+    <br>
     <ul>
       <% @project.issues.select(&:bug?).each do |issue| %>
-        <li class="btn-primary bg-green-300 hover:bg-green-400 ">
-          <%= link_to issue.name, edit_project_issue_path(@project, issue), class: 'w-full py-2 px-4 text-center' %>
-        </li>
+        <p class=" text-green-500 font-bold  "><%= issue.name %></p>
         <p>Status : <%= issue.status %></p>
         <p>QA : <%= issue.qa&.username %></p>
         <p>Developer : <%= issue.developer&.username %></p>
+        <% if policy(issue).edit? %>
+          <%= link_to 'Edit', edit_project_issue_path(@project, issue), class: ' btn-primary' %>
+        <% end %>
       <% end %>
     </ul>
-    <br>
-    <% if policy(Issue).new? %>
-      <div class='w-full flex justify-center'><button class="btn-primary">
-          <%= link_to "Create Issue", new_project_issue_path(@project) %></button>
-      </div>
-    <% end %>
   </div>
   <div class='mx-10 '>
     <p class='text-green-400'>Project Features:</p>
+    <br>
     <ul>
       <% @project.issues.select(&:feature?).each do |issue| %>
-        <li class="btn-primary bg-green-300 hover:bg-green-400 ">
-          <%= link_to issue.name, edit_project_issue_path(@project, issue), class: 'w-full py-2 px-4 text-center' %>
-        </li>
+        <p class="text-green-500 font-bold "><%= issue.name %></p>
         <p>Status : <%= issue.status %></p>
         <p>QA : <%= issue.qa&.username %></p>
         <p>Developer : <%= issue.developer&.username %></p>
+        <% if policy(issue).edit? %>
+          <%= link_to 'Edit', edit_project_issue_path(@project, issue), class: 'btn-primary' %>
+        <% end %>
       <% end %>
     </ul>
-    <br>
-    <% if policy(Issue).new? %>
-      <div class='w-full flex justify-center'><button class="btn-primary">
-          <%= link_to "Create Issue", new_project_issue_path(@project) %></button>
-      </div>
-    <% end %>
   </div>
 </div>
