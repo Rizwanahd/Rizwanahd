@@ -1,0 +1,31 @@
+.flex.items-center.justify-center.min-h-screen.bg-gray-100
+  .px-8.py-6.mt-4.text-left.bg-white.shadow-lg
+    .bg-white.rounded.px-8.pt-6.pb-8.mb-4
+      = form_with(model: @issue, url:[@project, @issue] )do |form|
+        = form.label :"Name:"
+        %br/
+        = form.text_field :name
+        %br/
+        - if @issue.id
+
+        - else
+          .field
+          = form.label :"Type:"
+          %br/
+          = form.select :issue_type, ["feature", "bug"]
+        - if @issue.id
+          .field
+            = form.label :"Status:"
+            %br/
+            = form.select :status, status_list(@issue, current_user)
+        - if policy(Issue).new?
+          .field
+            = form.label :"QA:"
+            %br/
+            = form.select :qa_id, [['Select QA', nil]] + @project.users.qa.map{ |u| [ u.username, u.id] }
+        - if policy(@issue).qa_show?
+          .field
+            = form.label :"Developer:"
+            %br/
+            = form.select :developer_id, [['Select Developer', nil]] + @project.users.developer.map{ |u| [ u.username, u.id] }
+        = form.submit class: 'btn-primary'

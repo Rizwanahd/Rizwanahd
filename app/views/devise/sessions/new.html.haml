@@ -1,0 +1,22 @@
+.flex.items-center.justify-center.min-h-screen.bg-gray-100
+  .px-8.py-6.mt-4.text-left.bg-white.shadow-lg
+    %h3.text-2xl.font-bold.text-center Login to your account
+    .bg-white.rounded.px-8.pt-6.pb-8.mb-4
+      = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+        .field
+          = f.label :email
+          %br/
+          = f.email_field :email, autofocus: true, autocomplete: "email"
+        .field
+          = f.label :password
+          %br/
+          = f.password_field :password, autocomplete: "current-password"
+        - if devise_mapping.rememberable?
+          .field
+            = f.check_box :remember_me
+            = f.label :remember_me
+        .actions
+          %button.px-6.py-2.mt-4.text-white.bg-blue-600.rounded-lg.hover:bg-blue-900 Login
+      .inline-flex
+        .text-blue-600.rounded-lg.hover:text-blue-900
+          = render "devise/shared/links"

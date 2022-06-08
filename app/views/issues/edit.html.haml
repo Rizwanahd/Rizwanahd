@@ -1,0 +1,4 @@
+%p.text-green-800.text-center Edit Issue
+= render "form", issues: @issue
+= link_to "Home", projects_path, class: 'btn-primary'
+= link_to "destroy", project_issue_path(@project), data:{turbo_method: :delete}, class: 'btn-primary'

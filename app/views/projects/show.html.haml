@@ -1,0 +1,90 @@
+.flex.relative.flex-grow
+  .w-60.space-x-6.bg-blue-500
+    %p.mx-6 Project Name:
+    %h1= @project.name
+    %br/
+    %p Project description:
+    %h4= @project.description
+    %br/
+    %h5 User name:
+    %p= " #{current_user.username}"
+    %br/
+    %h5 Role:
+    %p= " #{current_user.role}"
+    %br/
+    - if policy(@project).edit?
+      = link_to 'Edit', edit_project_path, class: 'btn-primary'
+      = link_to "Destroy", project_path(@project), data:{turbo_method: :delete}, class: 'btn-primary'                                                     |
+    - if policy(Issue).new?
+      = link_to "Create Issue", new_project_issue_path(@project), class:'btn-primary'
+    = link_to "Home", projects_path, |
+      class: 'btn-primary'           |
+  .mx-6
+    %p.text-green-400 Project Developers:
+    %ul
+      - @project.users.select(&:developer?).each do |user|
+        %li
+          = user.username
+          - if policy(Project).new?
+            = button_to "Remove to Project",                                            |
+              destroy_user_project_path(@project, user_id: user.id),:method => :delete, |
+              class: 'btn-primary w-[12rem]'                                            |
+    - if policy(Project).new?
+      %br/
+      %p.text-green-400 Developers to add:
+      %ul
+        - @users.select(&:developer?).each do |user|
+          - unless @project.users.include? user
+            %li
+              = user.username
+              = link_to "ADD to Project", add_user_project_path(@project, user_id: user.id), |
+                class: 'btn-primary'                                                         |
+    %br/
+    %br/
+    %p.text-green-400 Project QA:
+    %ul
+      - @project.users.select(&:qa?).each do |user|
+        %li
+          = user.username
+          - if policy(Project).new?
+            = button_to "Remove to Project",                                            |
+              destroy_user_project_path(@project, user_id: user.id),:method => :delete, |
+              class: 'btn-primary w-[12rem]'                                            |
+    - if policy(Project).new?
+      %br/
+      %p.text-green-400 QA to add:
+      %ul
+        - @users.select(&:qa?).each do |user|
+          - unless @project.users.include? user
+            %li
+              = user.username
+              = link_to "ADD to Project", add_user_project_path(@project, user_id: user.id), |
+                class: 'btn-primary'                                                         |
+  .mx-40
+    %p.text-green-400 Project Bugs:
+    %br/
+    %ul
+      - @project.issues.select(&:bug?).each do |issue|
+        %p.text-green-500.font-bold= issue.name
+        %p
+          Status : #{issue.status}
+        %p
+          QA : #{issue.qa&.username}
+        %p
+          Developer : #{issue.developer&.username}
+        - if policy(issue).edit?
+          = link_to 'Edit', edit_project_issue_path(@project, issue), class: ' btn-primary'
+  .mx-10
+    %p.text-green-400 Project Features:
+    %br/
+    %ul
+      - @project.issues.select(&:feature?).each do |issue|
+        %p.text-green-500.font-bold= issue.name
+        %p
+          Status : #{issue.status}
+        %p
+          QA : #{issue.qa&.username}
+        %p
+          Developer : #{issue.developer&.username}
+        - if policy(issue).edit?
+          = link_to 'Edit', edit_project_issue_path(@project, issue), class: 'btn-primary'

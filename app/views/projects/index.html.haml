@@ -1,0 +1,11 @@
+.w-40.h-screen.bg-blue-500
+  %h1.text-green-300.text-xl.font-bold.text-center Projects
+  %ul
+    - @projects.each do |project|
+      - unless project.archived?
+        %li.m-1.flex.justify-center.item-center.bg-blue-400.hover:bg-blue-700.text-white.font-bold
+          = link_to project.name, project, class: 'w-full py-2 px-4 text-center'
+  - if policy(Project).new?
+    .w-full.flex.justify-center
+      %button.btn-primary
+        = link_to "New Project", new_project_path
