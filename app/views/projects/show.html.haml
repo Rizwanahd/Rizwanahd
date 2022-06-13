@@ -12,13 +12,12 @@
     %h5 Role:
     %p= " #{current_user.role}"
     %br/
+    = link_to "Home", projects_path, class: 'btn-primary'
     - if policy(@project).edit?
       = link_to 'Edit', edit_project_path, class: 'btn-primary'
       = link_to "Destroy", project_path(@project), data:{turbo_method: :delete}, class: 'btn-primary'                                                     |
     - if policy(Issue).new?
       = link_to "Create Issue", new_project_issue_path(@project), class:'btn-primary'
-    = link_to "Home", projects_path, |
-      class: 'btn-primary'           |
   .mx-6
     %p.text-green-400 Project Developers:
     %ul
@@ -37,8 +36,7 @@
           - unless @project.users.include? user
             %li
               = user.username
-              = link_to "ADD to Project", add_user_project_path(@project, user_id: user.id), |
-                class: 'btn-primary'                                                         |
+              = link_to "ADD to Project", add_user_project_path(@project, user_id: user.id),  class: 'btn-primary'
     %br/
     %br/
     %p.text-green-400 Project QA:
@@ -46,11 +44,11 @@
       - @project.users.select(&:qa?).each do |user|
         %li
           = user.username
-          - if policy(Project).new?
+          - if policy(@project).new?
             = button_to "Remove to Project",                                            |
               destroy_user_project_path(@project, user_id: user.id),:method => :delete, |
               class: 'btn-primary w-[12rem]'                                            |
-    - if policy(Project).new?
+    - if policy(@project).new?
       %br/
       %p.text-green-400 QA to add:
       %ul
@@ -58,8 +56,7 @@
           - unless @project.users.include? user
             %li
               = user.username
-              = link_to "ADD to Project", add_user_project_path(@project, user_id: user.id), |
-                class: 'btn-primary'                                                         |
+              = link_to "ADD to Project", add_user_project_path(@project, user_id: user.id), class: 'btn-primary'                                                         |
   .mx-40
     %p.text-green-400 Project Bugs:
     %br/

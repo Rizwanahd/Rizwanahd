@@ -22,7 +22,7 @@ class IssuePolicy < ApplicationPolicy
   end
 
   def destroy?
-    edit?
+    new? && record.id
   end
 
   def update?

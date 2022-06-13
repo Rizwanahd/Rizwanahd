@@ -18,7 +18,7 @@
             = form.label :"Status:"
             %br/
             = form.select :status, status_list(@issue, current_user)
-        - if policy(Issue).new?
+        - if policy(@issue).new?
           .field
             = form.label :"QA:"
             %br/
@@ -29,3 +29,6 @@
             %br/
             = form.select :developer_id, [['Select Developer', nil]] + @project.users.developer.map{ |u| [ u.username, u.id] }
         = form.submit class: 'btn-primary'
+        - if policy(@issue).destroy?
+          = link_to "destroy", project_issue_path(@project), data:{turbo_method: :delete}, class: 'btn-primary'
+

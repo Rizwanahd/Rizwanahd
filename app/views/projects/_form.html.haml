@@ -10,3 +10,6 @@
         %br/
         = form.text_area :description
         = form.submit class: 'btn-primary'
+        - if policy(@project).destroy?
+          = link_to "destroy", project_path(@project), data:{turbo_method: :delete}, class: 'btn-primary'
+

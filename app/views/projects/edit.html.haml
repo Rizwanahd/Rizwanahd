@@ -1,4 +1,2 @@
 %p.text-green-800.text-center Edit Project
 = render "form", projects: @project
-= link_to "Home", projects_path, class: 'btn-primary'
-= link_to "destroy", project_path(@project), data:{turbo_method: :delete}, class: 'btn-primary'
