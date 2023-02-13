@@ -15,8 +15,6 @@ gem 'jquery-rails'
 
 gem 'devise'
 
-gem 'rubocop', require: false
-
 gem 'bullet', group: 'development'
 
 gem 'activeadmin'
